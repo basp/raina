@@ -9,4 +9,4 @@ Code metrics for .NET assemblies.
 
 Essentially this is just a case of curiousity and the desire to have a new toy to program and play with (i.e. calculating code metrics).
 
-For now the best reference is in my [latest gists](https://gist.github.com/basp). Don't even bother looking in `Raina.Cmd` or `Raina.Facts` because they are shamefully just stubbed (in the worst form of stubbed).
+For now the best reference is in my [latest gists](https://gist.github.com/basp) or in the code. Don't bother looking in `Raina.Cmd` or `Raina.Facts` because they are shamefully stubbed.
