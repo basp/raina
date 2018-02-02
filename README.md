@@ -7,6 +7,6 @@ Code metrics for .NET assemblies.
 
 >  The rain jokes are never ending and all at once no one will spell it right.
 
-Essentially this is just a case of curiousity and the desire to have a new toy to play with (i.e. calculating code metrics).
+Essentially this is just a case of curiousity and the desire to have a new toy to program and play with (i.e. calculating code metrics).
 
 For now the best reference is in my [latest gists](https://gist.github.com/basp).
