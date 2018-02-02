@@ -1,7 +1,7 @@
 # raina
 Code metrics for .NET assemblies.
 
-> Also feminine form of Ray (Old German) "wise guardian".
+> Feminine form of Ray (Old German) "wise guardian".
 
 > Strong and solid, with a touch of foreign intrigue.
 
