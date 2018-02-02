@@ -108,8 +108,7 @@
 
         private static bool DependsOn(this MethodDefinition self, MethodDefinition other) =>
             // TODO: This seems to work... 
-            // Why do we even need the ugly name hack in the `MethodCe` 
-            // method above?
+            // Why do we even need the ugly name hack in the `MethodCe` method above?
             self.Body.Instructions.Any(x => other.Equals(x.Operand));
 
         private static bool IsConditionalBranchInstruction(this Instruction self) =>
