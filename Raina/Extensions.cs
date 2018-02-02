@@ -76,6 +76,9 @@
                 .Count();
         }
 
+        // C# pattern matching is still a bit limited but even just having
+        // type switches is pretty good. Throwing the exception is not really
+        // nice though...
         private static string GetOperandMethodFullName(this Instruction self)
         {
             switch (self.Operand)
