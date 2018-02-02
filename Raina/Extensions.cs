@@ -10,7 +10,7 @@
 
     public static class Extensions
     {
-        	// The number of scopes in a method.
+    // The number of scopes in a method.
 	public static int ILNestingDepth(this MethodDefinition method) =>
 		// We can reasonbly guestimate this by just counting the number 
 		// of conditional branch instructions in the body.
