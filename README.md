@@ -5,7 +5,7 @@ Code metrics for .NET assemblies.
 
 > Strong and solid, with a touch of foreign intrigue.
 
->  I will say the rain jokes are never ending and all at once no one will spell it right.
+>  The rain jokes are never ending and all at once no one will spell it right.
 
 Essentially this is just a case of curiousity and the desire to have a new toy to play with (i.e. calculating code metrics).
 
