@@ -76,8 +76,7 @@
                 .Count();
         }
 
-        // C# pattern matching is still a bit limited but even just having
-        // type switches is pretty good.
+        // Even just having type switches is pretty good!
         private static string GetOperandMethodFullName(this Instruction self)
         {
             switch (self.Operand)
