@@ -119,9 +119,6 @@
             self.OpCode.FlowControl == FlowControl.Branch ||
             self.OpCode.FlowControl == FlowControl.Cond_Branch;
 
-        private static IEnumerable<string> ReadDocument(this string path) =>
-            File.ReadLines(path);
-
         private static bool IsScopeMarker(this char c) =>
             c.IsStartScopeMarker() || c.IsEndScopeMarker();
 
@@ -137,6 +134,9 @@
         // Line and col are one-based, substract one to indices
         private static char GetCharAt(this IEnumerable<string> lines, int line, int col) =>
             lines.ElementAt(line - 1).Substring(col - 1, 1)[0];
+
+        private static IEnumerable<string> ReadDocument(this string path) =>
+            File.ReadLines(path);
 
         private static Func<string, IEnumerable<string>> MemoizeReadDocument()
         {
