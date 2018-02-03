@@ -1,14 +1,14 @@
-namespace Raina.Facts
+namespace Raina.Facts.FieldMetrics
 {
     using System;
     using Xunit;
 
-    public class FieldMetricFacts
+    public class FieldCaFacts
     {
         [Fact]
         public void CalculateFieldCa()
         {
-            var type = typeof(FieldMetricFacts);
+            var type = typeof(FieldCaFacts);
             var cases = new []
             {
                 Tuple.Create(3, type.GetFieldDefinition(nameof(this.a))),
