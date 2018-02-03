@@ -10,6 +10,17 @@
 
     public static class Extensions
     {
+        public static int FieldCa(this FieldDefinition field) =>
+            field.Module.Assembly.Modules
+                .SelectMany(x => x.Types)
+                .SelectMany(x => x.Methods)
+                .Where(x => x.HasBody)
+                .Where(x => x.DependsOn(field))
+                .Count();
+
+        private static bool DependsOn(this MethodDefinition self, FieldDefinition field) =>
+            self.Body.Instructions.Any(x => field.Equals(x.Operand));
+
         // The number of scopes in a method.
         public static int ILNestingDepth(this MethodDefinition method) =>
             // We can reasonbly guestimate this by just counting the number 
