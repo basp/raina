@@ -9,7 +9,7 @@ namespace Raina.Facts.MethodMetrics
         public void CalculateILNestingDepth()
         {
             var type = typeof(ILNestingDepthFacts);
-            var cases = new []
+            var cases = new[]
             {
                 Tuple.Create(0, type.GetMethodDefinition(nameof(this.Method1))),
                 Tuple.Create(1, type.GetMethodDefinition(nameof(this.Method2))),
@@ -26,7 +26,7 @@ namespace Raina.Facts.MethodMetrics
 
         private void Method2()
         {
-            if(DateTime.Now.Ticks > 100)
+            if (DateTime.Now.Ticks > 100)
             {
                 Console.WriteLine("bar");
             }
@@ -39,8 +39,8 @@ namespace Raina.Facts.MethodMetrics
         private void Method3()
         {
             var x = 0;
-            
-            switch(x)
+
+            switch (x)
             {
                 case 1: Console.WriteLine("foo"); break;
                 case 2: Console.WriteLine("bar"); break;
@@ -52,12 +52,12 @@ namespace Raina.Facts.MethodMetrics
         {
             var x = 0;
 
-            if(x > 0)
+            if (x > 0)
             {
                 Console.WriteLine("quux");
             }
 
-            if(x < 20)
+            if (x < 20)
             {
                 Console.WriteLine("frotz");
             }
