@@ -76,7 +76,6 @@
                 .Count();
         }
 
-        // Even just having type switches is pretty good!
         private static string GetOperandMethodFullName(this Instruction self)
         {
             switch (self.Operand)
