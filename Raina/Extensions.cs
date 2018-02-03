@@ -23,7 +23,7 @@
 
         // The number of scopes in a method.
         public static int ILNestingDepth(this MethodDefinition method) =>
-            // We can reasonbly guestimate this by just counting the number 
+            // We can reasonbly guestimate this by just counting the number
             // of conditional branch instructions in the body.
             method.Body.Instructions
                 .Where(x => x.IsConditionalBranchInstruction())
@@ -59,23 +59,23 @@
                 .Distinct()
                 .Count() + 1;
 
-        // The only thing that makes this a little bit tricky is that we 
-        // don't want to count the curly braces marking the beginning and 
+        // The only thing that makes this a little bit tricky is that we
+        // don't want to count the curly braces marking the beginning and
         // end of scopes. As such, we dive into the source and do a pretty
-        // ugly character check using the information from the pdb. 
+        // ugly character check using the information from the pdb.
         //
-        // We memoize the whole reading-the-file thing to make it a bit 
+        // We memoize the whole reading-the-file thing to make it a bit
         // faster during runtime at the expensive of a little bit of memory.
         //
-        // NOTE: Since we're using the pdb this won't work at all when the 
+        // NOTE: Since we're using the pdb this won't work at all when the
         // pdb is not available.
         public static int NbLinesOfCode(this MethodDefinition method)
         {
             var memread = MemoizeReadDocument();
             return method.DebugInformation.SequencePoints
                 .Select(x => new { Code = memread(x.Document.Url), Ins = x })
-                // We sometimes get crazy (outlier) line numbers from Cecil (like 16234212 in a 
-                // 96 line file) so let's just hack around this for now and pretend it did not 
+                // We sometimes get crazy (outlier) line numbers from Cecil (like 16234212 in a
+                // 96 line file) so let's just hack around this for now and pretend it did not
                 // happen...
                 .Where(x => x.Code.IsValidLine(x.Ins.StartLine))
                 // This is actually a pretty dirty way to skip around the scope markers but
@@ -85,6 +85,38 @@
                 // This will give a pretty good indication of the actual lines of code without
                 // any real biases.
                 .Count();
+        }
+
+        public static MethodDefinition GetMethodDefinition(this Type self, string name) =>
+            self.GetAssemblyDefinition().Modules
+                .SelectMany(x => x.Types)
+                .Where(x => x.FullName.Equals(self.FullName, StringComparison.OrdinalIgnoreCase))
+                .SelectMany(x => x.Methods)
+                .First(x => x.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+
+        public static FieldDefinition GetFieldDefinition(this Type self, string name) =>
+            self.GetAssemblyDefinition().Modules
+                .SelectMany(x => x.Types)
+                .Where(x => x.FullName.Equals(self.FullName, StringComparison.OrdinalIgnoreCase))
+                .SelectMany(x => x.Fields)
+                .First(x => x.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+
+        public static AssemblyDefinition GetAssemblyDefinition(this Type self)
+        {
+            var path = self.AssemblyPath();
+            var @params = new ReaderParameters
+            {
+                ReadSymbols = true,
+                ReadWrite = false,
+            };
+
+            return AssemblyDefinition.ReadAssembly(path, @params);
+        }
+
+        private static string AssemblyPath(this Type self)
+        {
+            var uri = new UriBuilder(self.Assembly.CodeBase);
+            return Uri.UnescapeDataString(uri.Path);
         }
 
         private static string GetOperandMethodFullName(this Instruction self)
@@ -118,7 +150,7 @@
         }
 
         private static bool DependsOn(this MethodDefinition self, MethodDefinition other) =>
-            // TODO: This seems to work... 
+            // TODO: This seems to work...
             // Why do we even need the ugly name hack in the `MethodCe` method above?
             self.Body.Instructions.Any(x => other.Equals(x.Operand));
 
