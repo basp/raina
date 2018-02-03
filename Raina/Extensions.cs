@@ -87,6 +87,7 @@
                 .Count();
         }
 
+        // FIXME: This probably won't work well for overloads
         public static MethodDefinition GetMethodDefinition(this Type self, string name) =>
             self.GetAssemblyDefinition().Modules
                 .SelectMany(x => x.Types)
