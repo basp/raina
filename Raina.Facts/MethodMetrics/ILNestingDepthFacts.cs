@@ -39,6 +39,7 @@ namespace Raina.Facts.MethodMetrics
         private void Method3()
         {
             var x = 0;
+            
             switch(x)
             {
                 case 1: Console.WriteLine("foo"); break;
