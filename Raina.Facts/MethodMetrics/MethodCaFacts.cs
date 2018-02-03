@@ -9,12 +9,13 @@ namespace Raina.Facts.MethodMetrics
         public void CalculateMethodCa()
         {
             var type = typeof(MethodCaFacts);
-            var cases = new []
+            var cases = new[]
             {
-                Tuple.Create(2, type.GetMethodDefinition(nameof(this.Method1)).MethodCa()),
-                Tuple.Create(2, type.GetMethodDefinition(nameof(this.Method2)).MethodCa()),
-                Tuple.Create(0, type.GetMethodDefinition(nameof(this.Method3)).MethodCa()),
+                Tuple.Create(2, type.GetMethodDefinition(nameof(this.Method1))),
+                Tuple.Create(2, type.GetMethodDefinition(nameof(this.Method2))),
+                Tuple.Create(0, type.GetMethodDefinition(nameof(this.Method3))),
             };
+
         }
 
         private void Method1()

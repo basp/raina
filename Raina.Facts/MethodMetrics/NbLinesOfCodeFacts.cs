@@ -9,7 +9,7 @@ namespace Raina.Facts.MethodMetrics
         public void CalculateNbLinesOfCode()
         {
             var type = typeof(NbLinesOfCodeFacts);
-            var cases = new []
+            var cases = new[]
             {
                 Tuple.Create(1, type.GetMethodDefinition(nameof(this.Method1))),
                 Tuple.Create(2, type.GetMethodDefinition(nameof(this.Method2))),
@@ -33,7 +33,7 @@ namespace Raina.Facts.MethodMetrics
             Console.WriteLine("foo");
             Console.WriteLine("bar");
 
-            if(DateTime.Now.Ticks > 100)
+            if (DateTime.Now.Ticks > 100)
             {
                 Console.WriteLine("quux");
             }
@@ -41,7 +41,7 @@ namespace Raina.Facts.MethodMetrics
 
         private void Method4()
         {
-            if(DateTime.Now.Ticks > 100)
+            if (DateTime.Now.Ticks > 100)
             {
                 Console.WriteLine("quux");
             }
