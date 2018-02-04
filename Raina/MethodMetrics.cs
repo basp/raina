@@ -1,4 +1,4 @@
-﻿namespace Raina
+namespace Raina
 {
     using System;
     using System.Collections.Concurrent;
@@ -8,19 +8,8 @@
     using Mono.Cecil;
     using Mono.Cecil.Cil;
 
-    public static class Extensions
+    public static class MethodMetrics
     {
-        public static int FieldCa(this FieldDefinition field) =>
-            field.Module.Assembly.Modules
-                .SelectMany(x => x.Types)
-                .SelectMany(x => x.Methods)
-                .Where(x => x.HasBody)
-                .Where(x => x.DependsOn(field))
-                .Count();
-
-        private static bool DependsOn(this MethodDefinition self, FieldDefinition field) =>
-            self.Body.Instructions.Any(x => field.Equals(x.Operand));
-
         // The number of scopes in a method.
         public static int ILNestingDepth(this MethodDefinition method) =>
             // We can reasonbly guestimate this by just counting the number
@@ -87,40 +76,7 @@
                 .Count();
         }
 
-        // FIXME: This probably won't work well for overloads
-        public static MethodDefinition GetMethodDefinition(this Type self, string name) =>
-            self.GetAssemblyDefinition().Modules
-                .SelectMany(x => x.Types)
-                .Where(x => x.FullName.Equals(self.FullName, StringComparison.OrdinalIgnoreCase))
-                .SelectMany(x => x.Methods)
-                .First(x => x.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
-
-        public static FieldDefinition GetFieldDefinition(this Type self, string name) =>
-            self.GetAssemblyDefinition().Modules
-                .SelectMany(x => x.Types)
-                .Where(x => x.FullName.Equals(self.FullName, StringComparison.OrdinalIgnoreCase))
-                .SelectMany(x => x.Fields)
-                .First(x => x.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
-
-        public static AssemblyDefinition GetAssemblyDefinition(this Type self)
-        {
-            var path = self.AssemblyPath();
-            var @params = new ReaderParameters
-            {
-                ReadSymbols = true,
-                ReadWrite = false,
-            };
-
-            return AssemblyDefinition.ReadAssembly(path, @params);
-        }
-
-        private static string AssemblyPath(this Type self)
-        {
-            var uri = new UriBuilder(self.Assembly.CodeBase);
-            return Uri.UnescapeDataString(uri.Path);
-        }
-
-        private static string GetOperandMethodFullName(this Instruction self)
+                private static string GetOperandMethodFullName(this Instruction self)
         {
             switch (self.Operand)
             {
