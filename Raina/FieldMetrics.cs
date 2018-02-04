@@ -20,22 +20,31 @@ namespace Raina
 
         public static int SizeOfInstance(this FieldDefinition self)
         {
+            // If a field is static then its instance size
+            // is zero by definition.
             if (self.IsStatic)
             {
                 return 0;
             }
 
+            // Eventually everything boils down to these
+            // predefined sizes.
             var typeName = self.FieldType.FullName;
             if (PredefinedSizes.ContainsKey(typeName))
             {
                 return PredefinedSizes[typeName];
             }
 
+            // For structs we'll return *its* size (i.e. the sum
+            // of its field sizes).
             if (self.FieldType.IsValueType)
             {
                 return self.FieldType.Resolve().SizeOfInstance();
             }
 
+            // For reference types we'll just return the default
+            // int size (i.e. the size of the underlying pointer
+            // into the heap).
             return sizeof(int);
         }
 
