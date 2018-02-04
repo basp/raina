@@ -11,8 +11,8 @@ namespace Raina.Facts.MethodMetrics
             var type = typeof(NbOverloadsFacts);
             var cases = new []
             {
-                Tuple.Create(0, typeof(NbOverloadsFacts).GetMethodDefinition(nameof(this.Method1))),
-                Tuple.Create(4, typeof(NbOverloadsFacts).GetMethodDefinition(nameof(this.Method2))),
+                Tuple.Create(1, typeof(NbOverloadsFacts).GetMethodDefinition(nameof(this.Method1))),
+                Tuple.Create(5, typeof(NbOverloadsFacts).GetMethodDefinition(nameof(this.Method2))),
             };
 
             Array.ForEach(cases, x => Assert.Equal(x.Item1, x.Item2.NbOverloads()));
@@ -25,12 +25,15 @@ namespace Raina.Facts.MethodMetrics
             Console.WriteLine();
 
         private void Method2(string foo) =>
-            Console.WriteLine(foo);
+            Console.WriteLine();
 
         private void Method2(int foo) =>
-            Console.WriteLine(foo);
+            Console.WriteLine();
 
         private void Method2(int foo, string bar) =>
-            Console.WriteLine($"{foo} - {bar}");
+            Console.WriteLine();
+
+        static void Method2(int u, int v) =>
+            Console.WriteLine();
     }
 }

@@ -10,7 +10,11 @@ namespace Raina
 
     public static class MethodMetrics
     {
-        public static int NbOverloads(this MethodDefinition self) => 0;
+        // This needs some tweaking, it's pretty naive right now.
+        public static int NbOverloads(this MethodDefinition self) =>
+            self.DeclaringType.Methods
+                .Where(x => x.Name.Equals(self.Name, StringComparison.OrdinalIgnoreCase))
+                .Count();
 
         // The number of scopes in a method.
         public static int ILNestingDepth(this MethodDefinition self) =>
