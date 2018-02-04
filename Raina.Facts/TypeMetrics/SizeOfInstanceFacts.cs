@@ -10,11 +10,6 @@ namespace Raina.Facts.TypeMetrics
         {
             var cases = new[]
             {
-                // Tuple.Create(5, typeof(Frotz).GetTypeDefinition()),
-                // Tuple.Create(7, typeof(Quux).GetTypeDefinition()),
-                // Tuple.Create(8, typeof(Bar).GetTypeDefinition()),
-                // Tuple.Create(9, typeof(Foo).GetTypeDefinition()),
-                // Tuple.Create(17, typeof(Zoz).GetTypeDefinition()),
                 Tuple.Create(Frotz.ExpectedSizeOfInstance, typeof(Frotz).GetTypeDefinition()),
                 Tuple.Create(Quux.ExpectedSizeOfInstance, typeof(Quux).GetTypeDefinition()),
                 Tuple.Create(Bar.ExpectedSizeOfInstance, typeof(Bar).GetTypeDefinition()),
