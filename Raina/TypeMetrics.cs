@@ -10,6 +10,9 @@ namespace Raina
 
     public static class TypeMetrics
     {
+        public static int DIT(this TypeDefinition self) =>
+            self.BaseType != null ? 1 + self.BaseType.Resolve().DIT() : 0;
+
         public static int SizeOfInstance(this TypeDefinition self) =>
             self.HasFields
                 ? self.Fields.Sum(x => x.SizeOfInstance()) + self.BaseType.SizeOfInstance()
