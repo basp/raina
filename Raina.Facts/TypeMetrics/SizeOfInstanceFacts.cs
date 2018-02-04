@@ -25,9 +25,9 @@ namespace Raina.Facts.TypeMetrics
     class Zoz : Foo
     {
         new internal static int ExpectedSizeOfInstance =>
-            0                               // static
+            0                               // v (static)
             + sizeof(int)                   // u
-            + 4                             // f
+            + 4                             // f (reference)
             + Foo.ExpectedSizeOfInstance;   // base
 
         static int v;
@@ -40,8 +40,8 @@ namespace Raina.Facts.TypeMetrics
     class Foo
     {
         internal static int ExpectedSizeOfInstance =>
-            4                               // reference
-            + Frotz.ExpectedSizeOfInstance; // value type
+            4                               // b (reference)
+            + Frotz.ExpectedSizeOfInstance; // f (value type)
 
         Bar b;
 
@@ -51,7 +51,7 @@ namespace Raina.Facts.TypeMetrics
     class Bar
     {
         internal static int ExpectedSizeOfInstance =>
-            0                               // static
+            0                               // si (static)
             + sizeof(int)                   // i
             + 4;                            // reference
 
@@ -66,7 +66,7 @@ namespace Raina.Facts.TypeMetrics
     {
         internal static int ExpectedSizeOfInstance =>
             sizeof(short)                   // s
-            + Frotz.ExpectedSizeOfInstance; // value type
+            + Frotz.ExpectedSizeOfInstance; // f (value type)
 
         short s;
 
