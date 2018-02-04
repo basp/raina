@@ -11,6 +11,8 @@ namespace Raina
         public static string Document(this MethodDefinition self) =>
             self.DebugInformation.SequencePoints.First().Document.Url;
 
+        // Returns a (line,column) tuple pointing to where the method
+        // body starts (in terms of offsets from the document origin).
         public static Tuple<int,int> GetOffset(this MethodDefinition self)
         {
             var point = self.DebugInformation
