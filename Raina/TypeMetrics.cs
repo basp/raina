@@ -11,6 +11,11 @@ namespace Raina
     public static class TypeMetrics
     {
         public static int SizeOfInstance(this TypeDefinition self) =>
-            self.HasFields ? self.Fields.Sum(x => x.SizeOfInstance()) : 0;
+            self.HasFields
+                ? self.Fields.Sum(x => x.SizeOfInstance()) + self.BaseType.SizeOfInstance()
+                : 0;
+
+        private static int SizeOfInstance(this TypeReference self) =>
+            self.Resolve().SizeOfInstance();
     }
 }

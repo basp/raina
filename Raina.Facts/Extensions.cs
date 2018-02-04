@@ -10,6 +10,11 @@ namespace Raina.Facts
 
     public static class Extensions
     {
+        public static TypeDefinition GetTypeDefinition(this Type self) =>
+            self.GetAssemblyDefinition().Modules
+                .SelectMany(x => x.Types)
+                .First(x => x.FullName.Equals(self.FullName, StringComparison.OrdinalIgnoreCase));
+
         // FIXME: This probably won't work well for overloads
         public static MethodDefinition GetMethodDefinition(this Type self, string name) =>
             self.GetAssemblyDefinition().Modules
