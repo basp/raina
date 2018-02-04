@@ -10,6 +10,10 @@ namespace Raina
 
     public static class AssemblyMetrics
     {
-        
+        public static int NbLinesOfCode(this AssemblyDefinition self) =>
+            self.Modules
+                .SelectMany(x => x.Types)
+                .SelectMany(x => x.Methods)
+                .Sum(x => x.NbLinesOfCode());
     }
 }

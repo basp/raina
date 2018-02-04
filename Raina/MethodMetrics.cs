@@ -10,6 +10,12 @@ namespace Raina
 
     public static class MethodMetrics
     {
+        // Note that for extension methods, the `this` reference 
+        // is counted as a parameter.
+        public static int NbParameters(this MethodDefinition self) =>
+            self.HasParameters ? self.Parameters.Count : 0;
+
+        // The number of variables in the body of a method.
         public static int NbVariables(this MethodDefinition self) =>
             self.HasBody ? self.Body.Variables.Count : 0;
 
