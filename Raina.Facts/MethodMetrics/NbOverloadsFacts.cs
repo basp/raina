@@ -11,8 +11,8 @@ namespace Raina.Facts.MethodMetrics
             var type = typeof(NbOverloadsFacts);
             var cases = new []
             {
-                Tuple.Create(1, typeof(NbOverloadsFacts).GetMethodDefinition(nameof(this.Method1))),
-                Tuple.Create(5, typeof(NbOverloadsFacts).GetMethodDefinition(nameof(this.Method2))),
+                Tuple.Create(1, type.GetMethodDefinition(nameof(this.Method1))),
+                Tuple.Create(5, type.GetMethodDefinition(nameof(this.Method2))),
             };
 
             Array.ForEach(cases, x => Assert.Equal(x.Item1, x.Item2.NbOverloads()));

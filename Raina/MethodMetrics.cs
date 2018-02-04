@@ -10,6 +10,9 @@ namespace Raina
 
     public static class MethodMetrics
     {
+        public static int NbVariables(this MethodDefinition self) =>
+            self.HasBody ? self.Body.Variables.Count : 0;
+
         // This needs some tweaking, it's pretty naive right now.
         public static int NbOverloads(this MethodDefinition self) =>
             self.DeclaringType.Methods
@@ -82,7 +85,7 @@ namespace Raina
                 .Count();
         }
 
-                private static string GetOperandMethodFullName(this Instruction self)
+        private static string GetOperandMethodFullName(this Instruction self)
         {
             switch (self.Operand)
             {
