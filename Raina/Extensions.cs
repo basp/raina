@@ -11,20 +11,13 @@ namespace Raina
         public static string Document(this MethodDefinition self) =>
             self.DebugInformation.SequencePoints.First().Document.Url;
 
-        public static Tuple<int,int> GetStartOffset(this MethodDefinition self)
+        public static Tuple<int,int> GetOffset(this MethodDefinition self)
         {
             var point = self.DebugInformation
                 .SequencePoints
                 .First(x => x.StartLine < Junk);
 
-            // The line we get back points to where the actual body starts
-            // but you kinda expect to end up at the method declaration.
-            //
-            // NOTE: this is very hacky, we'll have to see how well this 
-            // works in practice.
-            const int fudge = 1;
-
-            return Tuple.Create(point.StartLine - fudge, point.StartColumn);
+            return Tuple.Create(point.StartLine, point.StartColumn);
         }
     }
 }
