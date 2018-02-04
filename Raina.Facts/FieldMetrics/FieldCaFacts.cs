@@ -9,7 +9,7 @@ namespace Raina.Facts.FieldMetrics
         public void CalculateFieldCa()
         {
             var type = typeof(FieldCaFacts);
-            var cases = new []
+            var cases = new[]
             {
                 Tuple.Create(3, type.GetFieldDefinition(nameof(this.a))),
                 Tuple.Create(2, type.GetFieldDefinition(nameof(this.b))),
@@ -37,10 +37,10 @@ namespace Raina.Facts.FieldMetrics
             Console.WriteLine(this.c);
         }
 
-        #pragma warning disable CS0649
+#pragma warning disable CS0649
         private readonly string a;
         private readonly string b;
         private readonly string c;
-        #pragma warning restore CS0649
+#pragma warning restore CS0649
     }
 }

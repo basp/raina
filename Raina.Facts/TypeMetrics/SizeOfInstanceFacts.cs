@@ -3,7 +3,7 @@ namespace Raina.Facts.TypeMetrics
     using System;
     using Xunit;
 
-    public class SizeOfInstanceFacts : AbstractSizeOfInstanceFacts
+    public class SizeOfInstanceFacts
     {
         [Fact]
         public void CalculateSizeOfInstance()
@@ -25,7 +25,7 @@ namespace Raina.Facts.TypeMetrics
     class Zoz : Foo
     {
         new internal static int ExpectedSizeOfInstance =>
-            0                               // static 
+            0                               // static
             + sizeof(int)                   // u
             + 4                             // f
             + Foo.ExpectedSizeOfInstance;   // base
