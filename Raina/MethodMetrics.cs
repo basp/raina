@@ -10,28 +10,30 @@ namespace Raina
 
     public static class MethodMetrics
     {
+        public static int NbOverloads(this MethodDefinition self) => 0;
+
         // The number of scopes in a method.
-        public static int ILNestingDepth(this MethodDefinition method) =>
+        public static int ILNestingDepth(this MethodDefinition self) =>
             // We can reasonbly guestimate this by just counting the number
             // of conditional branch instructions in the body.
-            method.Body.Instructions
+            self.Body.Instructions
                 .Where(x => x.IsConditionalBranchInstruction())
                 .Count();
 
         // The number of methods that depend on this method.
         // External methods are not counted.
-        public static int MethodCa(this MethodDefinition method) =>
-            method.Module.Assembly.Modules
+        public static int MethodCa(this MethodDefinition self) =>
+            self.Module.Assembly.Modules
                 .SelectMany(x => x.Types)
                 .SelectMany(x => x.Methods)
                 .Where(x => x.HasBody)
-                .Where(x => x.DependsOn(method))
+                .Where(x => x.DependsOn(self))
                 .Count();
 
         // The number of methods that this method depends on.
         // External methods are counted.
-        public static int MethodCe(this MethodDefinition method) =>
-            method.Body.Instructions
+        public static int MethodCe(this MethodDefinition self) =>
+            self.Body.Instructions
                 .Where(x => x.IsMethodCall())
                 .Where(x => x.HasWellKnownCallOperand())
                 .Select(x => x.GetOperandMethodFullName())
@@ -40,8 +42,8 @@ namespace Raina
                 .Distinct()
                 .Count();
 
-        public static int CCIL(this MethodDefinition method) =>
-            method.Body.Instructions
+        public static int CCIL(this MethodDefinition self) =>
+            self.Body.Instructions
                 .Where(x => x.IsBranchInstruction())
                 .Select(x => (Instruction)x.Operand)
                 .Select(x => x.Offset)
@@ -58,10 +60,10 @@ namespace Raina
         //
         // NOTE: Since we're using the pdb this won't work at all when the
         // pdb is not available.
-        public static int NbLinesOfCode(this MethodDefinition method)
+        public static int NbLinesOfCode(this MethodDefinition self)
         {
             var memread = MemoizeReadDocument();
-            return method.DebugInformation.SequencePoints
+            return self.DebugInformation.SequencePoints
                 .Select(x => new { Code = memread(x.Document.Url), Ins = x })
                 // We sometimes get crazy (outlier) line numbers from Cecil (like 16234212 in a
                 // 96 line file) so let's just hack around this for now and pretend it did not
@@ -130,15 +132,15 @@ namespace Raina
         private static bool IsEndScopeMarker(this char c) =>
             c == '}';
 
-        private static bool IsValidLine(this IEnumerable<string> lines, int line) =>
-            line >= 0 && line < lines.Count();
+        private static bool IsValidLine(this IEnumerable<string> self, int line) =>
+            line >= 0 && line < self.Count();
 
         // Line and col are one-based, substract one to indices
-        private static char GetCharAt(this IEnumerable<string> lines, int line, int col) =>
-            lines.ElementAt(line - 1).Substring(col - 1, 1)[0];
+        private static char GetCharAt(this IEnumerable<string> self, int line, int col) =>
+            self.ElementAt(line - 1).Substring(col - 1, 1)[0];
 
-        private static IEnumerable<string> ReadDocument(this string path) =>
-            File.ReadLines(path);
+        private static IEnumerable<string> ReadDocument(this string self) =>
+            File.ReadLines(self);
 
         private static Func<string, IEnumerable<string>> MemoizeReadDocument()
         {
