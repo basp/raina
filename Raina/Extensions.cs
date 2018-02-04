@@ -6,6 +6,10 @@ namespace Raina
 
     public static class Extensions
     {
+        // Some lines have really nice "junk" values that we can
+        // we can safely "ignore" mostly. The value below is just 
+        // a regular value that pops up. We might have to scrub 
+        // this more intelligently later.
         const int Junk = 16707566;
 
         public static string Document(this MethodDefinition self) =>
