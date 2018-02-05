@@ -39,10 +39,15 @@ namespace Raina
             R = new ConcurrentDictionary<string, double>(
                 methods.ToDictionary(x => x.FullName, x => 1.0));
 
+            // In order for the algorithm to come up with a good result
+            // we need to run it a few times re-using its previous results
+            // as our new input.
             for (var i = 0; i < iter; i++)
             {
                 foreach (var m in methods)
                 {
+                    // This is basically a straight translation of
+                    // Google's PageRank idea.
                     R[m.FullName] = (1.0 - d) + d * callers[m.FullName]
                         .Select(x => R[x] / nbcallees[x])
                         .Sum();
