@@ -18,6 +18,8 @@ namespace Raina
                 ? self.Fields.Sum(x => x.SizeOfInstance()) + self.BaseType.SizeOfInstance()
                 : 0;
 
+        public static bool DependsOn(this TypeDefinition self, TypeDefinition other) => false;
+
         private static int SizeOfInstance(this TypeReference self) =>
             self.Resolve().SizeOfInstance();
     }
