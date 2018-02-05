@@ -10,6 +10,9 @@ namespace Raina
 
     public static class MethodMetrics
     {
+        public static int NbILInstructions(this MethodDefinition self) =>
+            self.HasBody ? self.Body.Instructions.Count : 0;
+
         // Note that for extension methods, the `this` reference 
         // is counted as a parameter.
         public static int NbParameters(this MethodDefinition self) =>

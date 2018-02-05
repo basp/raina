@@ -17,6 +17,7 @@ namespace Raina
         public static double Rank(this MethodDefinition self) =>
             R.GetOrAdd(self.FullName, -1);
 
+        // This method only exists because of a sanity check
         public static int Count => R.Count;
 
         private const double d = 0.85;
