@@ -15,13 +15,14 @@ namespace Raina
         }
 
         public static double Rank(this MethodDefinition self) =>
-            R.GetOrAdd(self.FullName, 0);
+            R.GetOrAdd(self.FullName, -1);
+
+        public static int Count => R.Count;
 
         private const double d = 0.85;
 
-        private static ConcurrentDictionary<string, double> R;
-
-        public static IEnumerable<KeyValuePair<string,double>> GetRankings() => R;
+        private static ConcurrentDictionary<string, double> R =
+            new ConcurrentDictionary<string, double>();
 
         private static void CalculateMethodRanks(AssemblyDefinition assembly, int iter = 20)
         {

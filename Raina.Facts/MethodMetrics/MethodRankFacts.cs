@@ -7,19 +7,13 @@ namespace Raina.Facts
 
     public class MethodRankFacts
     {
-        private AssemblyDefinition assembly;
-
-        public MethodRankFacts()
-        {
-
-            assembly = typeof(MethodRankFacts)
-                .GetAssemblyDefinition()
-                .WithMethodRanks();
-        }
-
         [Fact]
         public void RanksArePreCalculated()
         {
+            var assembly = typeof(MethodRankFacts)
+                .GetAssemblyDefinition()
+                .WithMethodRanks();
+
             var nbMethodsInThisAssembly = typeof(MethodRankFacts)
                 .GetAssemblyDefinition()
                 .Modules
@@ -29,12 +23,7 @@ namespace Raina.Facts
 
             Assert.Equal(
                 nbMethodsInThisAssembly, 
-                MethodRankExtensions.GetRankings().Count());
-        }
-
-        [Fact]
-        public void VerifyMethodRanks()
-        {
+                MethodRankExtensions.Count);
         }
     }
 }
