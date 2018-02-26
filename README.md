@@ -38,7 +38,7 @@ using(var asm = AssemblyDefinition.ReadAssembly(@path))
 }
 ```
 
-This will select all types in the assembly, select all methods from those types and concatenate that into a long list of methods. It will then calculate the **rank** and **number of lines of code** for each method, store that into an anonymous object and finally dump that enumerable into the **LINQPad** output.
+This will select all types in the assembly, select all methods from those types and concatenate that into a long list of methods. It will then calculate the **rank** and **number of lines of code** for each method, store that into a sequence of anonymous objects and finally dump that enumerable into the **LINQPad** output.
 
 ## examples
 * [Raina reporting about herself from LINQPad](https://imgur.com/yhzzqV5)
