@@ -40,6 +40,8 @@ using(var asm = AssemblyDefinition.ReadAssembly(@path))
 
 This will select all types in the assembly, select all methods from those types and concatenate that into a long list of methods. It will then calculate the **rank** and **number of lines of code** for each method, store that into a sequence of anonymous objects and finally dump that enumerable into the **LINQPad** output.
 
+Note that debug information (i.e. there has to be a 'pdb' file associated with your assembly in order for this to work).
+
 ## examples
 * [Raina reporting about herself from LINQPad](https://imgur.com/yhzzqV5)
 * [Raina reporting on Lina](https://i.imgur.com/2bmoP9P.png)
