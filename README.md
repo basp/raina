@@ -8,5 +8,6 @@ Code metrics for .NET assemblies.
 
 >  The rain jokes are never ending and all at once no one will spell it right.
 
-## example
-[Raina reporting about herself from LINQPad](https://imgur.com/yhzzqV5)
+## examples
+* [Raina reporting about herself from LINQPad](https://imgur.com/yhzzqV5)
+* [Raina reporting on Lina](https://i.imgur.com/2bmoP9P.png)
