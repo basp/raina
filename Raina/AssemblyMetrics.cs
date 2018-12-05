@@ -10,6 +10,10 @@ namespace Raina
 
     public static class AssemblyMetrics
     {
+        public static int Ca(this AssemblyDefinition self) => 0;
+
+        public static int Ce(this AssemblyDefinition self) => 0;
+
         public static int NbLinesOfCode(this AssemblyDefinition self) =>
             self.Modules
                 .SelectMany(x => x.Types)
