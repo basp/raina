@@ -8,7 +8,7 @@ namespace Raina
     using Mono.Cecil;
     using Mono.Cecil.Cil;
 
-    public static class MethodMetrics
+    public static class MethodMetricExtensions
     {
         public static int NbILInstructions(this MethodDefinition self) =>
             self.HasBody ? self.Body.Instructions.Count : 0;

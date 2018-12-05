@@ -5,7 +5,14 @@ namespace Raina
 
     public class Analyzer
     {
-        public Task<IAnalysisResult> AnalyzeSolutionAsync(string solutionFilePath)
+        private readonly IAssemblyProvider provider;
+
+        public Analyzer(IAssemblyProvider provider)
+        {
+            this.provider = provider;
+        }
+
+        public IAnalysisResult Analyze()
         {
             throw new NotImplementedException();
         }

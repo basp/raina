@@ -8,7 +8,7 @@ namespace Raina
     using Mono.Cecil;
     using Mono.Cecil.Cil;
 
-    public static class FieldMetrics
+    public static class FieldMetricExtensions
     {
         public static int FieldCa(this FieldDefinition field) =>
             field.Module.Assembly.Modules
