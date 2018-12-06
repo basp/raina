@@ -4,30 +4,34 @@ namespace Raina.Path
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
+    using Optional;
 
     internal class AbsoluteDirectoryPath : IAbsoluteDirectoryPath
     {
-        public AbsoluteDirectoryPath(IVolume volume, string directoryName)
+        public AbsoluteDirectoryPath(IVolume volume, string path)
         {
             this.Volume = volume;
-            this.DirectoryName = directoryName;
+            this.DirectoryName = Option.Some(Path.GetDirectoryName(path));
+            this.FullPath = path;
         }
 
         public IReadOnlyList<IAbsoluteDirectoryPath> ChildDirectories => throw new NotImplementedException();
 
         public IReadOnlyList<IAbsoluteFilePath> ChildFiles => throw new NotImplementedException();
 
-        public DirectoryInfo DirectoryInfo => throw new NotImplementedException();
+        public DirectoryInfo DirectoryInfo => new DirectoryInfo(this.FullPath);
 
-        public bool Exists => throw new NotImplementedException();
+        public bool Exists => this.DirectoryInfo.Exists;
 
-        public AbsolutePathKind Kind => throw new NotImplementedException();
+        public Option<IAbsoluteDirectoryPath> ParentDirectoryPath =>
+            Option.None<IAbsoluteDirectoryPath>();
+            // new AbsoluteDirectoryPath(this.Volume, this.DirectoryName);
 
-        public IAbsoluteDirectoryPath ParentDirectoryPath => throw new NotImplementedException();
+        public Option<string> DirectoryName { get; }
 
-        public string DirectoryName { get; }
+        public string FullPath { get; }
 
-        public bool HasParentDirectory => !string.IsNullOrEmpty(this.DirectoryName);
+        public bool HasParentDirectory => this.DirectoryName.HasValue;
 
         public bool IsAbsolutePath => true;
 
@@ -37,11 +41,11 @@ namespace Raina.Path
 
         public bool IsRelativePath => false;
 
-        public PathMode PathMode => PathMode.Absolute;
+        public PathMode Mode => PathMode.Absolute;
 
         public IVolume Volume { get; }
 
-        IDirectoryPath IPath.ParentDirectoryPath => throw new NotImplementedException();
+        Option<IDirectoryPath> IPath.ParentDirectoryPath => throw new NotImplementedException();
 
         public bool CanGetRelativePathFrom(IAbsoluteDirectoryPath pivotDirectory)
         {

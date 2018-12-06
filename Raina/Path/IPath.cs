@@ -3,6 +3,7 @@ namespace Raina.Path
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Optional;
 
     public interface IPath
     {
@@ -16,9 +17,11 @@ namespace Raina.Path
 
         bool IsRelativePath { get; }
 
-        IDirectoryPath ParentDirectoryPath { get; }
+        string FullPath { get; }
 
-        PathMode PathMode { get; }
+        Option<IDirectoryPath> ParentDirectoryPath { get; }
+
+        PathMode Mode { get; }
 
         bool IsChildOf(IDirectoryPath directory);
     }

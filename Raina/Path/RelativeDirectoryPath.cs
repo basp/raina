@@ -3,12 +3,23 @@ namespace Raina.Path
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.IO;
+    using Optional;
 
     internal class RelativeDirectoryPath : IRelativeDirectoryPath
     {
-        public string DirectoryName => throw new NotImplementedException();
+        public RelativeDirectoryPath(string path)
+        {
+            this.DirectoryName = Option.Some(Path.GetDirectoryName(path));
+            this.FullPath = path;
+        }
 
-        public IRelativeDirectoryPath ParentDirectoryPath => throw new NotImplementedException();
+        public Option<string> DirectoryName { get; }
+
+        public string FullPath { get; }
+
+        public Option<IRelativeDirectoryPath> ParentDirectoryPath =>
+            DirectoryName.Map(x => (IRelativeDirectoryPath)new RelativeDirectoryPath(x));
 
         public bool HasParentDirectory => false;
 
@@ -20,9 +31,11 @@ namespace Raina.Path
 
         public bool IsRelativePath => true;
 
-        public PathMode PathMode => PathMode.Relative;
+        public PathMode Mode => PathMode.Relative;
 
-        IDirectoryPath IPath.ParentDirectoryPath => throw new NotImplementedException();
+        Option<string> IDirectoryPath.DirectoryName { get; }
+
+        Option<IDirectoryPath> IPath.ParentDirectoryPath { get; }
 
         public bool CanGetAbsolutePathFrom(IAbsoluteDirectoryPath pivotDirectory)
         {

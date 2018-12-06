@@ -4,28 +4,38 @@ namespace Raina.Path
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
+    using Optional;
 
     internal class AbsoluteFilePath : IAbsoluteFilePath
     {
-        public FileInfo FileInfo => throw new NotImplementedException();
+        public AbsoluteFilePath(IVolume volume, string path)
+        {
+            this.Volume = volume;
+            this.FileExtension = Path.GetExtension(path);
+            this.FileName = Path.GetFileName(path);
+            this.FileNameWithoutExtension = Path.GetFileNameWithoutExtension(path);
+            this.DirectoryName = Path.GetDirectoryName(path);
+            this.FullPath = path;
+        }
 
-        public IVolume Volume => throw new NotImplementedException();
+        public FileInfo FileInfo => new FileInfo(this.FullPath);
 
-        public bool Exists => throw new NotImplementedException();
+        public IVolume Volume { get; }
 
-        public AbsolutePathKind Kind => throw new NotImplementedException();
+        public bool Exists => this.FileInfo.Exists;
 
-        public IAbsoluteDirectoryPath ParentDirectoryPath => throw new NotImplementedException();
+        public IAbsoluteDirectoryPath ParentDirectoryPath =>
+            new AbsoluteDirectoryPath(this.Volume, this.DirectoryName);
 
-        public string UNCServer => throw new NotImplementedException();
+        public string FileExtension { get; }
 
-        public string UNCShare => throw new NotImplementedException();
+        public string FileName { get; }
 
-        public string FileExtension => throw new NotImplementedException();
+        public string FileNameWithoutExtension { get; }
 
-        public string FileName => throw new NotImplementedException();
+        public string DirectoryName { get; }
 
-        public string FileNameWithoutExtension => throw new NotImplementedException();
+        public string FullPath { get; }
 
         public bool HasParentDirectory => true;
 
@@ -37,9 +47,13 @@ namespace Raina.Path
 
         public bool IsRelativePath => false;
 
-        public PathMode PathMode => PathMode.Absolute;
+        public PathMode Mode => PathMode.Absolute;
 
-        IDirectoryPath IPath.ParentDirectoryPath => throw new NotImplementedException();
+        Option<IAbsoluteDirectoryPath> IAbsolutePath.ParentDirectoryPath => throw new NotImplementedException();
+
+        Option<IDirectoryPath> IPath.ParentDirectoryPath => throw new NotImplementedException();
+
+        Option<string> IFilePath.DirectoryName => throw new NotImplementedException();
 
         public bool CanGetRelativePathFrom(IAbsoluteDirectoryPath pivotDirectory)
         {

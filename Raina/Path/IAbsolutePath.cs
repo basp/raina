@@ -3,6 +3,7 @@ namespace Raina.Path
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Optional;
 
     public interface IAbsolutePath : IPath
     {
@@ -10,9 +11,7 @@ namespace Raina.Path
 
         bool Exists { get; }        
 
-        AbsolutePathKind Kind { get; }
-
-        new IAbsoluteDirectoryPath ParentDirectoryPath { get; }
+        new Option<IAbsoluteDirectoryPath> ParentDirectoryPath { get; }
 
         bool CanGetRelativePathFrom(IAbsoluteDirectoryPath pivotDirectory);
 

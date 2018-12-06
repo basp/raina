@@ -64,34 +64,50 @@ namespace Raina.Path
             ParseLogicalDisk.Try().Or(ParseNetworkShare);
 
         private static TextParser<IRelativeFilePath> BareRelativeFilePath =
-            from segments in FileName.AtLeastOnceDelimitedBy(PathSeparator)
+            from segments in FileName.ManyDelimitedBy(PathSeparator)
             let fileName = string.Join(Path.DirectorySeparatorChar.ToString(), segments)
             select (IRelativeFilePath)new RelativeFilePath(fileName);
 
         private static TextParser<IRelativeFilePath> RootedRelativeFilePath =
             from _ in PathSeparator
-            from path in BareRelativeFilePath
+            from path in BareRelativeFilePath.Select(x => x.FullPath)
             let sep = Path.DirectorySeparatorChar.ToString()
             select (IRelativeFilePath)new RelativeFilePath(string.Concat(sep, path));
 
         private static TextParser<IRelativeFilePath> CurrentRelativePath = 
             from _1 in Character.EqualTo('.').Select(x => x.ToString())
             from _2 in PathSeparator
-            from path in BareRelativeFilePath.Select(x => x.FileName)
-            let sep = Path.DirectorySeparatorChar.ToString()
-            select (IRelativeFilePath)new RelativeFilePath(string.Join(sep, ".", path));
+            from path in BareRelativeFilePath.Select(x => x.FullPath)
+            select (IRelativeFilePath)new RelativeFilePath(Path.Combine(".", path));
             
         private static TextParser<IRelativeFilePath> ParentRelativePath =
             from _1 in Span.EqualTo("..")
             from _2 in PathSeparator
-            from path in BareRelativeFilePath.Select(x => x.FileName)
-            let sep = Path.DirectorySeparatorChar.ToString()
-            select (IRelativeFilePath)new RelativeFilePath(string.Join(sep, "..", path));
+            from path in BareRelativeFilePath.Select(x => x.FullPath)
+            select (IRelativeFilePath)new RelativeFilePath(Path.Combine("..", path));
 
         public static TextParser<IRelativeFilePath> RelativeFilePath = 
             RootedRelativeFilePath
                 .Or(ParentRelativePath)
                 .Or(CurrentRelativePath)
                 .Or(BareRelativeFilePath);
+
+        public static TextParser<IRelativeDirectoryPath> RelativeDirectoryPath =
+            from path in RelativeFilePath.Select(x => x.FullPath)
+            select (IRelativeDirectoryPath)new RelativeDirectoryPath(path);
+
+        public static TextParser<IAbsoluteDirectoryPath> AbsoluteDirectoryPath =
+            from volume in Volume
+            from _ in PathSeparator
+            from path in BareRelativeFilePath.Select(x => x.FullPath)
+            let fullPath = $"{volume.Name}{Path.DirectorySeparatorChar}{path}"
+            select (IAbsoluteDirectoryPath)new AbsoluteDirectoryPath(volume, fullPath);
+
+        public static TextParser<IAbsoluteFilePath> AbsoluteFilePath =
+            from volume in Volume
+            from _ in PathSeparator
+            from path in BareRelativeFilePath.Select(x => x.FullPath)
+            let fullPath = $"{volume.Name}{Path.DirectorySeparatorChar}{path}"
+            select (IAbsoluteFilePath)new AbsoluteFilePath(volume, fullPath);
     }
 }

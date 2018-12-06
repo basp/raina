@@ -3,6 +3,7 @@ namespace Raina.Path
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Optional;
 
     public interface IFilePath : IPath
     {
@@ -11,6 +12,8 @@ namespace Raina.Path
         string FileName { get; }
 
         string FileNameWithoutExtension { get; }
+
+        Option<string> DirectoryName { get; }
 
         IDirectoryPath GetSiblingDirectoryWithName(string directoryName);
 

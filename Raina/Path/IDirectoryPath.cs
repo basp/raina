@@ -3,10 +3,11 @@ namespace Raina.Path
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Optional;
 
     public interface IDirectoryPath : IPath
     {
-        string DirectoryName { get; }
+        Option<string> DirectoryName { get; }
 
         IDirectoryPath GetSiblingDirectoryWithName(string directoryName);
 
