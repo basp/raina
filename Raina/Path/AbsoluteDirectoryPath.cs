@@ -76,6 +76,11 @@ namespace Raina.Path
             throw new NotImplementedException();
         }
 
+        public bool OnSameVolumeThan(IAbsolutePath other)
+        {
+            throw new NotImplementedException();
+        }
+
         IDirectoryPath IDirectoryPath.GetChildDirectoryWithName(string directoryName)
         {
             throw new NotImplementedException();
