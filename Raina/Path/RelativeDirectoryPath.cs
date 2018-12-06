@@ -10,17 +10,17 @@ namespace Raina.Path
 
         public IRelativeDirectoryPath ParentDirectoryPath => throw new NotImplementedException();
 
-        public bool HasParentDirectory => throw new NotImplementedException();
+        public bool HasParentDirectory => false;
 
-        public bool IsAbsolutePath => throw new NotImplementedException();
+        public bool IsAbsolutePath => false;
 
-        public bool IsDirectoryPath => throw new NotImplementedException();
+        public bool IsDirectoryPath => true;
 
-        public bool IsFilePath => throw new NotImplementedException();
+        public bool IsFilePath => false;
 
-        public bool IsRelativePath => throw new NotImplementedException();
+        public bool IsRelativePath => true;
 
-        public PathMode PathMode => throw new NotImplementedException();
+        public PathMode PathMode => PathMode.Relative;
 
         IDirectoryPath IPath.ParentDirectoryPath => throw new NotImplementedException();
 
