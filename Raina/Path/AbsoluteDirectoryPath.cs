@@ -7,22 +7,10 @@ namespace Raina.Path
 
     internal class AbsoluteDirectoryPath : IAbsoluteDirectoryPath
     {
-        private readonly string directoryName;
-        private readonly IDriveLetter drive;
-        private readonly string uncServer = string.Empty;
-        private readonly string uncShare = string.Empty;
-
-        public AbsoluteDirectoryPath(IDriveLetter drive, string directoryName)
+        public AbsoluteDirectoryPath(IVolume volume, string directoryName)
         {
-            this.drive = drive;
-            this.directoryName = directoryName;
-        }
-
-        public AbsoluteDirectoryPath(string uncServer, string uncShare, string directoryName)
-        {
-            this.uncServer = uncServer;
-            this.uncShare = uncShare;
-            this.directoryName = directoryName;
+            this.Volume = volume;
+            this.DirectoryName = directoryName;
         }
 
         public IReadOnlyList<IAbsoluteDirectoryPath> ChildDirectories => throw new NotImplementedException();
@@ -31,21 +19,15 @@ namespace Raina.Path
 
         public DirectoryInfo DirectoryInfo => throw new NotImplementedException();
 
-        public IDriveLetter Drive => this.drive;
-
         public bool Exists => throw new NotImplementedException();
 
         public AbsolutePathKind Kind => throw new NotImplementedException();
 
         public IAbsoluteDirectoryPath ParentDirectoryPath => throw new NotImplementedException();
 
-        public string UNCServer => this.uncServer;
+        public string DirectoryName { get; }
 
-        public string UNCShare => this.uncShare;
-
-        public string DirectoryName => this.directoryName;
-
-        public bool HasParentDirectory => !string.IsNullOrEmpty(this.directoryName);
+        public bool HasParentDirectory => !string.IsNullOrEmpty(this.DirectoryName);
 
         public bool IsAbsolutePath => true;
 
@@ -56,6 +38,8 @@ namespace Raina.Path
         public bool IsRelativePath => false;
 
         public PathMode PathMode => PathMode.Absolute;
+
+        public IVolume Volume { get; }
 
         IDirectoryPath IPath.ParentDirectoryPath => throw new NotImplementedException();
 

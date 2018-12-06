@@ -9,7 +9,7 @@ namespace Raina.Path
     {
         public FileInfo FileInfo => throw new NotImplementedException();
 
-        public IDriveLetter Drive => throw new NotImplementedException();
+        public IVolume Volume => throw new NotImplementedException();
 
         public bool Exists => throw new NotImplementedException();
 

@@ -2,8 +2,8 @@ namespace Raina.Path
 {
     public enum AbsolutePathKind
     {
-        DriveLetter,
+        LogicalDisk,
         
-        UNC
+        NetworkShare,
     }
 }

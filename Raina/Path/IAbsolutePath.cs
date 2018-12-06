@@ -6,17 +6,13 @@ namespace Raina.Path
 
     public interface IAbsolutePath : IPath
     {
-        IDriveLetter Drive { get; }
+        IVolume Volume { get; }
 
         bool Exists { get; }        
 
         AbsolutePathKind Kind { get; }
 
         new IAbsoluteDirectoryPath ParentDirectoryPath { get; }
-
-        string UNCServer { get; }
-
-        string UNCShare { get; }        
 
         bool CanGetRelativePathFrom(IAbsoluteDirectoryPath pivotDirectory);
 

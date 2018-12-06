@@ -1,6 +1,8 @@
 namespace Raina.Path
 {
     using System;
+    using System.Collections.Generic;
+    using System.IO;
 
     public static class PathHelpers
     {
@@ -132,6 +134,19 @@ namespace Raina.Path
             out IRelativeFilePath relativeFilePath)
         {
             throw new NotImplementedException();
+        }
+
+        public static string NormalizePathString(string pathString)
+        {
+            var mapping = new Dictionary<char, char>
+            {
+                ['\\'] = '/',
+                ['/'] = '\\',
+            };
+
+            var oldChar = mapping[Path.DirectorySeparatorChar];
+            var newChar = Path.DirectorySeparatorChar;
+            return pathString.Replace(oldChar, newChar);
         }
     }
 }

@@ -3,16 +3,24 @@ namespace Raina.Path
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.IO;
 
     internal class RelativeFilePath : IRelativeFilePath
     {
+        public RelativeFilePath(string fileName)
+        {
+            this.FileExtension = Path.GetExtension(fileName);
+            this.FileName = fileName;
+            this.FileNameWithoutExtension = Path.GetFileNameWithoutExtension(fileName);
+        }
+
         public IRelativeDirectoryPath ParentDirectoryPath => throw new NotImplementedException();
 
-        public string FileExtension => throw new NotImplementedException();
+        public string FileExtension { get; }
 
-        public string FileName => throw new NotImplementedException();
+        public string FileName { get; }
 
-        public string FileNameWithoutExtension => throw new NotImplementedException();
+        public string FileNameWithoutExtension {get;}
 
         public bool HasParentDirectory => true;
 
